@@ -3,6 +3,7 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 require('console.table');
 const options = require('./inquirer/options');
+const newDepartment = require('./inquirer/addDepartment');
 
 const db = mysql.createConnection(
   {
@@ -15,6 +16,7 @@ const db = mysql.createConnection(
   console.log(`Connected to the employees_db database.`)
 );
 
+runProgram();
 
 function runProgram() {
     inquirer.prompt(options)
@@ -72,5 +74,22 @@ const viewAllEmployees = () => {
   })
 };
 
-runProgram();
+const addDepartment = () => {
+  inquirer.prompt(newDepartment)
+  .then((data) => {
+    db.query(`INSERT INTO department SET ?`,
+    {
+      departmentName: data.newDepartment
+    },
+    (err) =>{
+      if(err) throw err;
+      console.log('New Department Added')
+      console.table(data)
+      runProgram()
+    })
+  })
+};
+
+
+
 
