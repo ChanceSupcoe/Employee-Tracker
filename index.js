@@ -4,6 +4,8 @@ const fs = require('fs');
 require('console.table');
 const options = require('./inquirer/options');
 const newDepartment = require('./inquirer/addDepartment');
+const newRole = require('./inquirer/addRole');
+const newEmployee = require('./inquirer/addEmployee');
 
 const db = mysql.createConnection(
   {
@@ -84,6 +86,43 @@ const addDepartment = () => {
     (err) =>{
       if(err) throw err;
       console.log('New Department Added')
+      console.table(data)
+      runProgram()
+    })
+  })
+};
+
+const addRole = () => {
+  inquirer.prompt(newRole)
+  .then((data) => {
+    db.query(`INSERT INTO employeeRole SET ?`,
+    {
+      title: data.newRoleTitle,
+      salary: data.newRoleSalary,
+      department_id: data.newRoleDepartment
+    },
+    (err) =>{
+      if(err) throw err;
+      console.log('New Role Added')
+      console.table(data)
+      runProgram()
+    })
+  })
+};
+
+const addEmployee = () => {
+  inquirer.prompt(newEmployee)
+  .then((data) => {
+    db.query(`INSERT INTO employee SET ?`,
+    {
+      first_name: data.newEmployeeFirstName,
+      last_name: data.newEmployeeLastName,
+      role_id: data.newEmployeeRole,
+      manager_id: data.newEmployeeManager
+    },
+    (err) =>{
+      if(err) throw err;
+      console.log('New Employee Added')
       console.table(data)
       runProgram()
     })
