@@ -6,6 +6,7 @@ const options = require('./inquirer/options');
 const newDepartment = require('./inquirer/addDepartment');
 const newRole = require('./inquirer/addRole');
 const newEmployee = require('./inquirer/addEmployee');
+const updateEmployee = require('./inquirer/updateEmployee');
 
 const db = mysql.createConnection(
   {
@@ -123,6 +124,22 @@ const addEmployee = () => {
     (err) =>{
       if(err) throw err;
       console.log('New Employee Added')
+      console.table(data)
+      runProgram()
+    })
+  })
+};
+
+const updateEmployeeRole = () => {
+  inquirer.prompt(updateEmployee)
+  .then((data) => {
+    const role_id= data.employeeUpdateRole;
+    const  id= data.employeeID;
+    db.query(`UPDATE employee SET role_id = ${role_id} WHERE id = ${id}`,
+    
+    (err) =>{
+      if(err) throw err;
+      console.log('Employee Role Updated')
       console.table(data)
       runProgram()
     })
