@@ -9,9 +9,9 @@ PRIMARY KEY (id)
 );
 
 CREATE TABLE employeeRole (
-id IN AUTO_INCREMENT NOT NULL,
+id INT AUTO_INCREMENT NOT NULL,
 title VARCHAR(30),
-salary DECIMAL(19,4),
+salary DECIMAL(10,2),
 department_id INT,
 PRIMARY KEY (id) 
 );
