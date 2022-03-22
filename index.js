@@ -54,5 +54,23 @@ const viewAllDepartments = () => {
     })
 };
 
+const viewAllRoles = () => {
+  const query = `SELECT * FROM employeeRole`
+  db.query(query, (err, res) => {
+  if (err) throw err
+  console.table(res)
+  runProgram()
+  })
+};
+
+const viewAllEmployees = () => {
+  const query = `SELECT * FROM employee`
+  db.query(query, (err, res) => {
+  if (err) throw err
+  console.table(res)
+  runProgram()
+  })
+};
+
 runProgram();
 
