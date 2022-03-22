@@ -1,23 +1,14 @@
-const express = require('express');
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const inquirer = require('inquirer');
-const cTable = require('console.table');
+const fs = require('fs');
+require('console.table');
 const options = require('./inquirer/options');
 
-const PORT = process.env.PORT || 3001;
-const app = express();
-
-// Express middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
-// Connect to database
 const db = mysql.createConnection(
   {
     host: 'localhost',
-    // MySQL username,
     user: 'root',
-    // MySQL password
+    port: 3301,
     password: 'TYLER08a!!',
     database: 'employees_db'
   },
@@ -54,11 +45,13 @@ function runProgram() {
     });
 };
 
-function viewAllDepartments() {
-    db.query(`SELECT * FROM departments`, function (err, results) {
-        console.table(results);
-        console.log(table);
-    });
+const viewAllDepartments = () => {
+    const query = `SELECT * FROM department`
+    db.query(query, (err, res) => {
+    if (err) throw err
+    console.table(res)
+    runProgram()
+    })
 };
 
 runProgram();
